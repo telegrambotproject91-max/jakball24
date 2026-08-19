@@ -147,21 +147,22 @@ async def reschedule_all_reminders(application: Application):
 
 # ----------------------------- Keyboards & Messages -----------------------------
 WELCOME_MESSAGE = (
-    "Welcome to JakBall24h ⚽\n\n"
-    "Follow football matches with simple tools:\n\n"
+    "⚽ **Welcome to JakBall24h Score Tracker**\n\n"
+    "Follow football matches with simple tools directly in Telegram.\n\n"
     "📋 **Match List**\n"
     "View available football matches.\n\n"
-    "⚽ **Match Scores**\n"
-    "Check the latest available score information.\n\n"
+    "📊 **Match Scores**\n"
+    "Check available score information for matches.\n\n"
     "🔔 **Match Reminders**\n"
     "Set a reminder for a selected match.\n\n"
-    "Choose an option below to get started."
+    "**Quick guide:** Choose an option below, select a match when required, and follow the instructions.\n\n"
+    "Choose a tool to get started."
 )
 
 MAIN_KEYBOARD = ReplyKeyboardMarkup(
     [
         ["📋 Match List"],
-        ["⚽ Match Scores"],
+        ["📊 Match Scores"],
         ["🔔 Match Reminders"],
     ],
     resize_keyboard=True,
@@ -212,7 +213,6 @@ async def send_match_scores(update: Update, chat_id: int, context: ContextTypes.
             lines.append(f"{m['home_team']} {score} {m['away_team']}  (LIVE)")
         else:
             lines.append(f"{m['home_team']} vs {m['away_team']} – {score}")
-    # Add a back button
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("« Back to menu", callback_data="menu_back")]
     ])
@@ -406,7 +406,7 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(MessageHandler(filters.Regex("^📋 Match List$"), match_list_handler))
-    application.add_handler(MessageHandler(filters.Regex("^⚽ Match Scores$"), match_scores_handler))
+    application.add_handler(MessageHandler(filters.Regex("^📊 Match Scores$"), match_scores_handler))
     application.add_handler(MessageHandler(filters.Regex("^🔔 Match Reminders$"), match_reminders_handler))
     application.add_handler(CallbackQueryHandler(match_info_callback, pattern=r"^match_info\|"))
     application.add_handler(CallbackQueryHandler(matches_list_callback, pattern="^matches_list$"))
